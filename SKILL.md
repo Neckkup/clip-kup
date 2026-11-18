@@ -64,7 +64,8 @@ npx tsc -p .
 ## ขั้นที่ 5: render และส่งงาน
 
 ```bash
-<skill>/scripts/render.sh <Composition>      # ตั้ง CLIP_KUP_HOST=render@host เพื่อส่งไป render ที่เครื่อง render
+CLIP_KUP_HOST=render@172.16.83.67 <skill>/scripts/render.sh <Composition>   # เครื่อง render neck-gen: คลิป 24 วิ ~3 นาที
+<skill>/scripts/render.sh <Composition>                                      # ไม่ตั้ง host = render ในเครื่องตัวเอง (nice)
 ```
 - render นานกว่า 2 นาทีให้รันเป็น background แล้วบอกผู้ใช้ว่าจะใช้เวลาเท่าไหร่ (ดูตารางใน [render-machine.md](references/render-machine.md))
 - `render.sh` เรียก `finalize.sh` ให้เอง (loudnorm −16 LUFS และพิมพ์ความดังรายวินาที) ช่วงที่มีคนพูดต้องดังกว่าช่วงที่มีแค่เพลงชัดเจน ถ้าความดังราบเท่ากันตลอด แปลว่าไม่มีเสียงพากย์ ให้หาสาเหตุก่อนส่ง
@@ -80,6 +81,7 @@ npx tsc -p .
 | `scripts/vo.sh` | ตัดช่วงเงียบ / เร่งเสียง / **ตรวจว่ามีเสียงจริง** |
 | `scripts/contact-sheet.sh` | ภาพนิ่งหลายเฟรมรวมเป็นภาพเดียว |
 | `scripts/render.sh` | render เต็ม (ในเครื่อง หรือส่งไปเครื่อง render) + finalize |
+| `scripts/render-chunks.sh` | render แบบแบ่งช่วงหลายโปรเซส (เร็วกว่าเพิ่ม concurrency ~4 เท่าบนเครื่อง core เยอะ) |
 | `scripts/finalize.sh` | ปรับความดังและรายงานความดังรายวินาที |
 | `references/three-remotion.md` | โครงโค้ด กฎ และสิ่งที่เคยพลาด |
 | `references/phaya.md` | ราคา โมเดล เสียงพากย์ไทย และทาง AI gen |
